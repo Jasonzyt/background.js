@@ -42,7 +42,7 @@
   "77353796_p0.jpg": {
     "preset": "pixiv",
     "author": {
-      "name": "小半杯奶(恩泽)",
+      "name": "小半杯奶",
       "link": "https://www.pixiv.net/users/13750517"
     },
     "id": "77353796"
@@ -65,7 +65,7 @@
     "picture": 2
   },
   "kanna.jpg": {
-    "preset": "custom-html",
+    "preset": "custom:html",
     "html": "&copy;<a class=\"link\" href=\"https://www.bilibili.com/bangumi/play/ss5800\">Bilibili</a>"
   },
   "74922836_p0.jpg": {
@@ -101,7 +101,7 @@
     "bvid": "BV1MS4y117zA",
     "post": "https://t.bilibili.com/621885382988744896"
   },
-  "bilibili_post_594795203195896608": {
+  "bilibili_post_594795203195896608.jpg": {
     "preset": "bilibili:post",
     "author": {
       "name": "Taro(脆皮香芋子)",
@@ -145,11 +145,11 @@
     "picture": 18
   },
   "scenery_20200802.jpg": {
-    "preset": "custom-html",
+    "preset": "custom:html",
     "html": "&copy;Jasonzyt / Shot in Wuhan"
   },
   "scenery_20200816.jpg": {
-    "preset": "custom-html",
+    "preset": "custom:html",
     "html": "&copy;Jasonzyt / Shot in Wuhan"
   }
 }
