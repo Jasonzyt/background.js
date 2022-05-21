@@ -1,7 +1,20 @@
 const background = {
-    background_div: null,
-    copyright_div: null,
-    copyright_preset: {
+    /**
+     * @description  The background element.
+     */
+    bg_elmt: null,
+    /**
+     * @description  The copyright info element.
+     */
+    cr_elmt: null,
+    /**
+     * @description  The background image(HTMLImage).
+     */
+    bg_img: null,
+    /**
+     * @description  The copyright info data parsers.
+     */
+    cr_presets: {
         "default": function (data) {
             return 'Background ' + data.toString();
         },
@@ -19,24 +32,32 @@ const background = {
             `Background &copy;<a class="link" href="${data["author"]?.link}">${data["author"]?.name}</a> / <a class="link" href="${data["post"]}" target="_blank">Bilibili Post</a> / Video: <a class="link" href="https://bilibili.com/video/${data["bvid"]}?t=${data["time"]}" target="_blank">${data["bvid"]}</a>`;
         }
     },
-    background_img: null,
+    /**
+     * @description  The current background image info.
+     */
     current: null,
-    api: "http://localhost/random-background/api",
+    /**
+     * @description  The API address.
+     */
+    api: "random-background/api",
+    /**
+     * @description  The API access token.
+     */
     token: null,
     /**
      * Initialize the background
-     * @param bg_div  The background div element id
-     * @param cr_div  The copyright div element id
-     * @param api     The api server url
-     * @param token   The api token
+     * @param bg_elmt_id  The background element id
+     * @param cr_elmt_id  The copyright element id
+     * @param api         The api server url
+     * @param token       The api token
      * @return this
      */
-    init: function (bg_div = "background",
-                   cr_div = "bg-copyright",
+    init: function (bg_elmt_id = "background",
+                   cr_elmt_id = "bg-copyright",
                    api = null,
                    token = null) {
-        this.background_div = document.getElementById(bg_div);
-        this.copyright_div = document.getElementById(cr_div);
+        this.bg_elmt = document.getElementById(bg_elmt_id);
+        this.cr_elmt = document.getElementById(cr_elmt_id);
         if (api) {
             if (api[api.length - 1] === "/" || api[api.length - 1] === "\\") {
                 this.api = api.substring(0, api.length - 1);
@@ -50,9 +71,8 @@ const background = {
     },
     /**
      * Load a random background
-     * @param copyright  Whether to show the copyright or not
      */
-    load: function (copyright = true) {
+    load: function () {
         let width = window.screen.availWidth;
         let height = window.screen.availHeight;
         let aspect_ratio = width / height;
@@ -65,15 +85,15 @@ const background = {
         if (this.token) {
             api_url += '&token=' + this.token;
         }
-        if (!this.background_div) {
-            throw new Error("Background div is null");
+        if (!this.bg_elmt) {
+            throw new Error("Background element is null");
         }
-        this.background_div.style.background = "url('" + api_url + "') no-repeat center center fixed";
+        this.bg_elmt.style.background = "url('" + api_url + "') no-repeat center center fixed";
 
-        this.background_img = new Image();
+        this.bg_img = new Image();
         // Waiting for the image to load
-        this.background_img.src = api_url;
-        this.background_img.onload = function() {
+        this.bg_img.src = api_url;
+        this.bg_img.onload = function() {
             let req = new XMLHttpRequest();
             req.open('GET', `${background.api}/current.php`);
             req.onload = function() {
@@ -81,10 +101,11 @@ const background = {
                     let data = JSON.parse(req.responseText);
                     let dWidth = window.screen.availWidth / data.width;
                     let dHeight = window.screen.availHeight / data.height;
+                    //console.log(window.screen.availWidth, window.screen.availHeight, data.width, data.height, dWidth, dHeight);
                     let d = Math.max(dHeight, dWidth);
-                    background.background_div.style.zoom = d.toString();
+                    background.bg_elmt.style.zoom = d.toString();
                     background.current = data;
-                    if (copyright) {
+                    if (background.cr_elmt) {
                         background.loadCopyrightInfo(data["copyright"]);
                     }
                 }
@@ -97,23 +118,32 @@ const background = {
      * @param autoColor  Whether to auto color the copyright or not(this may take a few seconds to calculate)
      */
     loadCopyrightInfo: function(autoColor = true) {
-        this.copyright_div.style.display = 'block';
+        this.cr_elmt.style.display = 'block';
         if (this.current) {
-            let preset = this.copyright_preset[this.current["copyright"]["preset"]] ?? this.copyright_preset['default'];
-            this.copyright_div.innerHTML = preset(this.current["copyright"]);
+            let preset = this.cr_presets[this.current["copyright"]["preset"]] ?? this.cr_presets['default'];
+            this.cr_elmt.innerHTML = preset(this.current["copyright"]);
 
             if (autoColor) {
-                let x = this.background_img.width - this.copyright_div.offsetWidth;
-                let y = this.background_img.height - this.copyright_div.offsetHeight;
-                let style = window.getComputedStyle(this.copyright_div);
+                let x = this.bg_img.width - this.cr_elmt.offsetWidth;
+                let y = this.bg_img.height - this.cr_elmt.offsetHeight;
+                let style = window.getComputedStyle(this.cr_elmt);
                 let w = Math.ceil(Number.parseFloat(style.width.replace("px", "")));
                 let h = Math.ceil(Number.parseFloat(style.height.replace("px", "")));
                 if (w && h) {
                     let rgb = this.getMainColor( x < 0 ? 0 : x, y < 0 ? 0 : y, w, h);
-                    this.copyright_div.style.color = this.invertColor(rgb, true);
+                    this.cr_elmt.style.color = this.invertColor(rgb, true);
                 }
             }
         }
+    },
+    /**
+     * Set the API address
+     * @param api  The API address
+     * @return this
+     */
+    setAPI: function(api) {
+        this.api = api;
+        return this;
     },
 
     /**
@@ -125,7 +155,7 @@ const background = {
      * @returns {number[]} The RGB color of the main color
      */
     getMainColor: function (x, y, w, h) {
-        let img = this.background_img;
+        let img = this.bg_img;
         let canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;
