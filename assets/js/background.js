@@ -29,7 +29,7 @@ const background = {
             return `Background &copy;<a class="link" href="${data["author"]?.link}">${data["author"]?.name}</a> / <a class="link" href="${data.url}" target="_blank">Bilibili Post</a>`;
         },
         "bilibili:video&post": function (data) {
-            `Background &copy;<a class="link" href="${data["author"]?.link}">${data["author"]?.name}</a> / <a class="link" href="${data["post"]}" target="_blank">Bilibili Post</a> / Video: <a class="link" href="https://bilibili.com/video/${data["bvid"]}?t=${data["time"]}" target="_blank">${data["bvid"]}</a>`;
+            return `Background &copy;<a class="link" href="${data["author"]?.link}">${data["author"]?.name}</a> / <a class="link" href="${data["post"]}" target="_blank">Bilibili Post</a> / Video: <a class="link" href="https://bilibili.com/video/${data["bvid"]}?t=${data["time"]}" target="_blank">${data["bvid"]}</a>`;
         }
     },
     /**
@@ -101,8 +101,7 @@ const background = {
                     let data = JSON.parse(req.responseText);
                     let dWidth = window.screen.availWidth / data.width;
                     let dHeight = window.screen.availHeight / data.height;
-                    //console.log(window.screen.availWidth, window.screen.availHeight, data.width, data.height, dWidth, dHeight);
-                    let d = Math.max(dHeight, dWidth);
+                    let d = Math.max(dWidth, dHeight);
                     background.bg_elmt.style.zoom = d.toString();
                     background.current = data;
                     if (background.cr_elmt) {
