@@ -36,10 +36,10 @@ class Background {
      *                                          because the background image will be cropped to fit the screen(element).
      *                                        If the background image doesn't contain the horizontal/vertical/square tag,
      *                                            the background image will be ignored.
-     *             - *auto_color: Whether to automatically color the copyright element.
+     *             - auto_color: Whether to automatically color the copyright element.
      *                            If true, the copyright element will be colored according to the main color of
      *                              the background image that is below the copyright element.
-     *             - *background_list_url: The background list URL.
+     *             - background_list_url: The background list URL.
      *                                     If specified, the background list will be loaded from the URL.
      * @note It will automatically add the "horizontal", "vertical" or "square" tag to require_tags by the element size.
      */

@@ -1,0 +1,28 @@
+{
+  "name": "rbackground",
+  "version": "0.1.0",
+  "description": "A simple background image interface in JavaScript & CSS",
+  "main": "src/background.js",
+  "scripts": {
+    "test": "demo/demo.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jasonzyt/background.js.git"
+  },
+  "keywords": [
+    "background",
+    "javascript",
+    "js",
+    "h5",
+    "html",
+    "css",
+    "background-image"
+  ],
+  "author": "JasonZYT",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Jasonzyt/background.js/issues"
+  },
+  "homepage": "https://github.com/Jasonzyt/background.js#readme"
+}
