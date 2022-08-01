@@ -1,0 +1,22 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Random Background Test</title>
+    <!-- Link css and js -->
+    <link rel="stylesheet" href="../src/background.css"/>
+    <script src="../src/background.js"></script>
+</head>
+
+<body>
+
+<h1>It works!</h1>
+
+</body>
+
+<script>
+    new Background({copyright_element: false}).load_list_from_url("backgrounds.json").random();
+</script>
+
+</html>

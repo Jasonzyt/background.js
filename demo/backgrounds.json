@@ -1,0 +1,35 @@
+[
+  {
+    "src": "./img/backgrounds/scenery_20200802.jpg",
+    "copyright": "&copy;Jasonzyt / Shot in Wuhan",
+    "tags": [
+      "landscape",
+      "horizontal"
+    ]
+  },
+  {
+    "src": "./img/backgrounds/scenery_20200816.jpg",
+    "copyright": "&copy;Jasonzyt / Shot in Wuhan",
+    "tags": [
+      "scenery",
+      "horizontal"
+    ]
+  },
+  {
+    "src": "./img/backgrounds/scenery_20200723.jpg",
+    "copyright": "&copy;Jasonzyt / Shot in Wuhan",
+    "tags": [
+      "scenery",
+      "horizontal"
+    ]
+  },
+  {
+    "src": "./img/backgrounds/bilibili_post_625928209937638751.png",
+    "copyright": "&copy;miHoYo(HoYoVerse)",
+    "tags": [
+      "acg",
+      "genshin-impact",
+      "horizontal"
+    ]
+  }
+]

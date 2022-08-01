@@ -1,0 +1,47 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Random Background Test</title>
+    <!-- Link css and js -->
+    <link rel="stylesheet" href="../src/background.css"/>
+    <script src="../src/background.js"></script>
+</head>
+
+<body>
+
+<h1>It works!</h1>
+
+</body>
+
+<script>
+    new Background({
+        background_list: [
+            {
+                "src": "./img/backgrounds/scenery_20200802.jpg",
+                "copyright": {
+                    "preset": "custom:html",
+                    "html": "&copy;Jasonzyt / Shot in Wuhan"
+                },
+                "tags": ["landscape", "horizontal"]
+            },
+            {
+                "src": "./img/backgrounds/scenery_20200816.jpg",
+                "copyright": {
+                    "preset": "custom:html",
+                    "html": "&copy;Jasonzyt / Shot in Wuhan"
+                },
+                "tags": ["scenery", "horizontal"]
+            }
+        ],
+        require_tags: [],
+        copyright_presets: {
+            "custom:html": function (copyright) {
+                return copyright.html;
+            }
+        }
+    }).random();
+</script>
+
+</html>

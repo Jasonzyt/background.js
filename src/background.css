@@ -1,0 +1,37 @@
+body {
+    overflow: hidden;
+    margin: 0;
+}
+
+.background {
+    z-index: -10;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.background-copyright {
+    display: block;
+    position: absolute;
+    font-size: 0.5em;
+    color: #fff;
+    bottom: 0;
+    right: 1em;
+}
+
+.background-copyright .link {
+    color: #2ba7e8;
+    text-decoration: none;
+    box-shadow: none;
+}
+
+.background-copyright .link:hover {
+    color: #2a77c7;
+    text-decoration: underline;
+    cursor: pointer;
+}
