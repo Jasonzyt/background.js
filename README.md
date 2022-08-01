@@ -1,92 +1,123 @@
-# RandomBackground
-A simple random background interface
+# Background.js
 
-## Copyrights
-### third-party images used
-The images in [assets/img/backgrounds](assets/img/backgrounds) aren't under the license.  
-You shouldn't give out the images without giving the source link.  
-The images are from [pixiv](https://pixiv.net), [bilibili](https://www.bilibili.com), [Jasonzyt](https://www.github.com/Jasonzyt).  
-If your copyright is infringed, please contact me.
-
-The project is only for learning and personal use.   
-Please do not use it for commercial purposes unless you have obtained the authorization of the author of the background picture.
-
-## Requirement
-- Web service(such as Apache, Nginx, etc.)
-- PHP 8.0 (at least with following extensions)
-  - gd
+A simple background interface in JavaScript & CSS.
 
 ## Usage
-1. Download the latest release from GitHub or clone the repo with git  
-  `git clone https://github.com/Jasonzyt/random-background`
-2. Add site and edit site config
-3. View (and modify) `config.php`
-4. Start web service  
-  `systemctl start xxx`
 
-### Apache
-If you want to enable access token, you should create a file named `.htaccess` and add the following config in it
-```
-Options +FollowSymlinks -MultiViews
-RewriteEngine On
-# Authorization Headers
-RewriteCond %{HTTP:Authorization} ^(.+)$
-RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-```
-If you want to access APIs without `.php` file extension, you should append the following config in `.htaccess`
-```
-# Access without '.php' extensions
-RewriteCond %{THE_REQUEST} /([^.]+)\.php [NC]
-RewriteRule ^ /%1 [NC,L,R]
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^ %{REQUEST_URI}.php [NC,L]
-```
+## Samples
 
-## API Document
+### Random Background
 
-### Get a random picture
-
-`[GET] api/random.php`
-- Request: 
-  - Parameters: 
-    - require: **GET optional** `string`  
-      The background picture requirement, it can be the following types:  
-      - **vertical**: vertical picture(aspect ratio is less than 1)  
-      - **horizontal**: horizontal picture(aspect ratio is greater than 1)  
-    
-      If the parameter is not specified, it will randomly select one of all pictures.
-- Response: `image/*`  
-  The image file
-
-```http request
-GET /api/random?type=vertical HTTP/1.1
-Host: localhost
-Accept: image/*
-Authorization: Basic YWRtaW46YWRtaW4=
+```js
+new Background({
+    background_list: [
+        {
+            "src": "./img/backgrounds/scenery_20200802.jpg",
+            "copyright": "&copy;Jasonzyt / Shot in Wuhan",
+            "tags": [
+                "landscape",
+                "horizontal"
+            ]
+        },
+        {
+            "src": "./img/backgrounds/scenery_20200816.jpg",
+            "copyright": "&copy;Jasonzyt / Shot in Wuhan",
+            "tags": [
+                "scenery",
+                "horizontal"
+            ]
+        }
+    ]
+}).random();
 ```
 
-### Get the information of the current picture
+### Only One Background
 
-`[GET] api/current.php`
-- Request:
-  - No parameters
-- Response: `application/json`  
-  The information of the current picture. The object contains the following properties:
-  - path: `string`  
-    The path of the current picture(relative to the root directory(not the site root directory))
-  - width: `int`  
-  - height: `int`  
-  - mime: `string`  
-  - url: `string`  
-  - copyright: `string`  
-    The copyright information of the current picture
+```js
+new Background().load({
+    src: 'background.jpg',
+    copyright: '© copyright',
+    tags: ['horizontal', "tag1", "tag2"]
+});
+```
 
-### Get the current picture or a background picture by the given path
+### Random Background & List from URL
 
-`[GET] api/get.php`
-- Request:
-  - Parameters:
-    - path: **GET optional** `string`  
-      The path(file name) of the picture
-- Response: `image/*`
-    The image file
+```js
+new Background().load_list_from_url('backgrounds.json');
+```
+
+### Random Background & List from URL async
+
+```js
+(async function () {
+    const background = new Background();
+    await background.load_list_from_url_async('backgrounds.json');
+    background.random();
+})();
+```
+
+## Documentation
+
+### class `Background`
+
+#### Constructor
+
+`new Background()`
+
+***Parameters***
+- `obj`
+```  
+{
+  background_element: HTMLElement|null,
+  copyright_element: HTMLElement|null|false,
+  require_tags: array[array[string]],
+  copyright_presets: object|null,
+  background_list: array[{src: string, copyright: object, tags: array[string]}],
+  auto_colour: boolean,
+  background_list_url: string
+}
+```
+The background initialization object, containing the following fields:
+- `background_element`: The background element.  
+  Set to null to create a div element as the background element
+- `copyright_element`: The copyright element.  
+  Set to null to create a div element as the copyright element, false to disable the copyright element
+- `require_tags`: The tags that must be present in the background.  
+  For example, [["a"], ["b", "c"]] means that the background must contain ("a" tag) or ("b" tag and "c" tag).
+- `copyright_presets`: The copyright presets.  
+  The key in object is the preset name, and the value is a function that takes a copyright object and returns the copyright string.  
+  The default preset is "default".  
+  If the preset is not found or the copyright object doesn't have a preset entry, the default preset will be used.  
+  If no copyright preset is specified, the copyright element will simply be info.copyright.toString()
+- `background_list`: The background list.  
+  The background list is an array of objects, each containing the following fields:
+    - `src`: The background image source.
+    - `copyright`: The copyright info object.
+    - `tags`: The tags that the background image contains.
+    The tags must contain horizontal, vertical or square,
+    because the background image will be cropped to fit the screen(element).
+    If the background image doesn't contain the horizontal/vertical/square tag,
+    the background image will be ignored.
+- `auto_color`: Whether to automatically color the copyright element.
+If true, the copyright element will be colored according to the main color of
+the background image that is below the copyright element.
+- `background_list_url`: The background list URL.
+If specified, the background list will be loaded from the URL.
+
+---
+
+## Copyrights
+
+### Third-party Images Used
+
+The images in [demo/img/backgrounds](demo/img/backgrounds) aren't under the license.  
+You shouldn't give out the images without giving the source link.  
+The images are from [HoYoVerse](https://www.hoyoverse.com), [Jasonzyt](https://www.github.com/Jasonzyt).  
+If your copyright is infringed, please contact me.  
+(Only one [picture](demo/img/backgrounds/bilibili_post_625928209937638751.png)  was not created by me.
+And this image is to test the auto color feature)
+
+The project is only for learning and personal use.   
+Please do not use it for commercial purposes unless you have obtained the authorization of the author of the background
+picture.
