@@ -2,6 +2,34 @@
 
 A simple background interface in JavaScript & CSS.
 
+## Getting Started
+
+### Via CDN
+jsDeliver with GitHub:
+```html
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/jasonzyt/background.js@0.1.0/dist/background.min.css"/>
+<script src="//cdn.jsdelivr.net/gh/jasonzyt/background.js@0.1.0/dist/background.min.js"></script>
+```
+jsDeliver with npm:
+```html
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/rbackground@0.1.0/dist/background.min.css"/>
+<script src="//cdn.jsdelivr.net/npm/rbackgound@0.1.0/dist/background.min.js"></script>
+```
+UNPKG:
+```html
+<link rel="stylesheet" href="//unpkg.com/rbackground@0.1.0/dist/background.min.css"/>
+<script src="//unpkg.com/rbackground@0.1.0/dist/background.min.js"></script>
+```
+
+### Via local file
+Install via npm:
+```sh
+# npm
+npm i rbackground
+# GitHub Package
+npm install @jasonzyt/rbackground
+```
+
 ## Usage
 
 ## Samples
