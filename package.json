@@ -1,15 +1,16 @@
 {
-  "name": "rbackground",
+  "name": "@jasonzyt/rbackground",
   "version": "0.1.0",
   "description": "A simple background image interface in JavaScript & CSS",
   "main": "src/background.js",
-  "scripts": {
-    "test": "demo/demo.html"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Jasonzyt/background.js.git"
   },
+  "files": [
+    "src",
+    "dist"
+  ],
   "keywords": [
     "background",
     "javascript",
