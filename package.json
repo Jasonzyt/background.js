@@ -1,6 +1,6 @@
 {
-  "name": "@jasonzyt/rbackground",
-  "version": "0.1.0",
+  "name": "rbackground",
+  "version": "0.1.1",
   "description": "A simple background image interface in JavaScript & CSS",
   "main": "src/background.js",
   "repository": {
